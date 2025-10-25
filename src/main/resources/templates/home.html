@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+<h2>Bem-vindo à Home!</h2>
+
+<!-- Seção para admins -->
+<div th:if="${isAdmin}">
+    <h3>Área de Administração</h3>
+    <p>Você é ADMIN. Pode gerenciar usuários e configurações:</p>
+    <ul>
+        <li><a th:href="@{/auth/register}">Registrar novo usuário</a></li>
+        <!-- Você pode adicionar mais links/admin actions aqui -->
+    </ul>
+</div>
+
+<!-- Seção para usuários comuns -->
+<div th:if="${!isAdmin}">
+    <h3>Área do Usuário</h3>
+    <p>Você é USER. Aqui está sua mensagem personalizada:</p>
+    <p>Bem-vindo ao sistema!</p>
+</div>
+
+<hr>
+<a th:href="@{/logout}">Sair</a>
+
+</body>
+</html>
