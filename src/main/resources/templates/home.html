@@ -3,30 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
-<h2>Bem-vindo à Home!</h2>
+<header>
+    <h2>Bem-vindo, <span th:text="${user}">Usuário</span>!</h2>
+    <a class="logout" th:href="@{/logout}">Sair</a>
+</header>
 
-<!-- Seção para admins -->
-<div th:if="${isAdmin}">
-    <h3>Área de Administração</h3>
-    <p>Você é ADMIN. Pode gerenciar usuários e configurações:</p>
-    <ul>
-        <li><a th:href="@{/auth/register}">Registrar novo usuário</a></li>
-        <!-- Você pode adicionar mais links/admin actions aqui -->
-    </ul>
-</div>
+<main>
+    <!-- Área de ADMIN -->
+    <div th:if="${isAdmin}" class="conteudo">
+        <h3>Área de Administração</h3>
+        <p>Você pode registrar novos usuários:</p>
+        <form th:action="@{/auth/register}" method="post">
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <select name="role">
+                <option value="ROLE_USER">USER</option>
+                <option value="ROLE_ADMIN">ADMIN</option>
+            </select>
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
 
-<!-- Seção para usuários comuns -->
-<div th:if="${!isAdmin}">
-    <h3>Área do Usuário</h3>
-    <p>Você é USER. Aqui está sua mensagem personalizada:</p>
-    <p>Bem-vindo ao sistema!</p>
-</div>
-
-<hr>
-<a th:href="@{/logout}">Sair</a>
-
+    <!-- Área de USER -->
+    <div th:if="${!isAdmin}" class="conteudo">
+        <h3>Área do Usuário</h3>
+        <p>Seus dados:</p>
+        <ul>
+            <li>Usuário: <span th:text="${user}">Usuário</span></li>
+            <li>Role: <span th:text="${isAdmin} ? 'ADMIN' : 'USER'">ROLE_USER</span></li>
+        </ul>
+    </div>
+</main>
 </body>
 </html>

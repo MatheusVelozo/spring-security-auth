@@ -14,6 +14,8 @@ public class HomeController {
         boolean isAdmin = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         model.addAttribute("isAdmin", isAdmin);
+
+        model.addAttribute("user", auth.getName());
         return "home";
     }
 }
